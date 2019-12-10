@@ -31,4 +31,4 @@ Practicing Constructor Pattern.
 
 Project 10 of [Vanilla JS Academy](https://vanillajsacademy.com/)
 
-[View Demo](https://mashablair.github.io/helper-library/)
+[View Demo](https://mashablair.github.io/small-dom-library/)

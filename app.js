@@ -1,26 +1,33 @@
+// Tutorial here: https://gomakethings.com/how-to-create-your-own-vanilla-js-dom-manipulation-library-like-jquery/#avoid-having-to-use-new-each-time
 var $ = (function() {
   /**
-   * The constructor object
+   * Create the constructor
+   * @param {String} selector The selector to use
    */
   var Constructor = function(selector) {
-    this.selector = selector;
+    if (selector === "document") {
+      this.elems = [document];
+    } else if (selector === "window") {
+      this.elems = [window];
+    } else {
+      this.elems = document.querySelectorAll(selector);
+    }
   };
 
   /**
    * Get an array of items from the DOM.
-   * @return {Array} The wizards
+   * @return {Array}  Array of elems selected
    */
   Constructor.prototype.get = function() {
-    return Array.from(document.querySelectorAll(this.selector));
+    return Array.from(this.elems);
   };
 
   Constructor.prototype.getFirst = function() {
-    return document.querySelector(this.selector);
+    return this.elems[0];
   };
 
   Constructor.prototype.getLast = function() {
-    var array = this.get();
-    return array[array.length - 1];
+    return this.elems[this.elems.length - 1];
   };
 
   Constructor.prototype.addClass = function(class_name) {
@@ -35,13 +42,23 @@ var $ = (function() {
     });
   };
 
-  return Constructor;
+  /**
+   * Instantiate a new constructor to avoid typing 'new' operator every time
+   * we want to instantiate
+   */
+  var instantiate = function(selector) {
+    return new Constructor(selector);
+  };
+
+  /**
+   * Return the constructor instantiation
+   */
+  return instantiate;
 })();
 
 // Use like this:
-var buttons = new $("button");
-buttons.get();
-buttons.addClass("btn-purple");
+// var buttons = $("button").get();
+// buttons.addClass("btn-purple");
 
 // Methods available
 // .get()
