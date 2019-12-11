@@ -10,16 +10,8 @@ var $ = (function() {
     } else if (selector === "window") {
       this.elems = [window];
     } else {
-      this.elems = document.querySelectorAll(selector);
+      this.elems = Array.from(document.querySelectorAll(selector));
     }
-  };
-
-  /**
-   * Get an array of items from the DOM.
-   * @return {Array}  Array of elems selected
-   */
-  Constructor.prototype.get = function() {
-    return Array.from(this.elems);
   };
 
   Constructor.prototype.getFirst = function() {
@@ -34,12 +26,14 @@ var $ = (function() {
     this.get().forEach(function(item) {
       item.classList.add(class_name);
     });
+    return this;
   };
 
   Constructor.prototype.removeClass = function(class_name) {
     this.get().forEach(function(item) {
       item.classList.remove(class_name);
     });
+    return this;
   };
 
   /**
@@ -57,8 +51,10 @@ var $ = (function() {
 })();
 
 // Use like this:
-// var buttons = $("button").get();
+// var buttons = $("button");
+// buttons.elems // gets you the array of elems selected
 // buttons.addClass("btn-purple");
+// buttons.getFirst();
 
 // Methods available
 // .get()
